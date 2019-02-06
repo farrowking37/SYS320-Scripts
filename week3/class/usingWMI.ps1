@@ -12,8 +12,9 @@
 #Get-WmiObject -Class Win32_account | Select Name, PasswordRequired, InstalledDate, AccountType
 
 # Filter for WMI-object using regular expressions (regex)
-#Get-WmiObject -list | where {$_.Name -ilike "win32_[j-s]*"} | sort
+# Get-WmiObject -list | where {$_.Name -ilike "win32_[u]*"} | sort
 
 # Filter for the network adapter wmi-object using regex.
-# Get-WmiObject -list | where {$_.Name -ilike "win32_[n]*"} | Select-String "net"
-Get-WmiObject -Class Win32_NetworkAdapter
+ #Get-WmiObject -list | where {$_.Name -ilike "win32_[n]*"} | Select-String "net"
+
+Get-NetTCPConnection
