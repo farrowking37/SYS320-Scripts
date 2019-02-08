@@ -18,7 +18,7 @@ foreach ($cveEntry in $CVE_File) {
     #if ($cveEntry.Name -eq "CVE-1999-0001") {
 
     # Task: Create a prompt that allows the user to specifiy an arbitrary keyword
-    
+    # Variable $search set above so that every item in the CSV does not trigger an opprotunity to change what is being searched for.
 
     if ($cveEntry.Description -ilike "*$search*"){
         # Print that the CVE was found.
