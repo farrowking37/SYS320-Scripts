@@ -67,41 +67,20 @@ function sysAdmin {
 
 
     switch ($sysAdminTask) {
-        1 { Get-Process | Out-Host}
-        2 { Get-Service | Out-Host }
-        3 { Get-Service | where {$_.Status -eq "Running"} | Out-Host }
+        1 { Get-Process | Out-Host ; break}
+        2 { Get-Service | Out-Host ; break}
+        3 { Get-Service | where {$_.Status -eq "Running"} | Out-Host ; break }
         4 { mainMenu }
         5 { exit }
+        default {  
+            write-host -backgroundcolor red -foregroundcolor white "Invalid option"
+            sleep 4
+
+            # Call the system admin menu so the user can start again.
+            sysAdmin 
+        } # End default switch
     
     } # End switch statement
-
-
-   <#
-    #Process the user's input
-    if ($sysAdminTask -eq "R") {
-        mainMenu
-    
-    } elseif ($sysAdminTask -eq 1) {
-        get-process | out-host
-    
-    } elseif ($sysAdminTask -eq 2) {
-        get-service | out-host
-   
-    } elseif ($sysAdminTask -eq 3) {
-        get-service |where {$_.Status -eq "Running"} | out-host
-   
-    } elseif ($sysAdminTask -eq "E"){
-        break
-
-    } else {
-    
-        write-host -backgroundcolor red -foregroundcolor white "Invalid option"
-        sleep 4
-
-        # Call the system admin menu so the user can start again.
-        sysAdmin
-    
-    } #>
 
 
     # Allow the user to review the results
@@ -122,42 +101,29 @@ function secAdmin {
     write-host "1. List all users"
     write-host "2. List all services, including path"
     write-host "3. List all processes, including path"
-    write-host "[R]eturn"
-    write-host "[E]xit"    
+    write-host "4. Return to main menu"
+    write-host "5. Exit"    
 
     # Take user input
     $secAdminTask = read-host -Prompt "Please select one of the above options"
 
-    # Process user input
-    if ($secAdminTask -eq 1){
+    switch($secAdminTask) {
+        1 {Get-WmiObject -Class Win32_UserAccount | Select Name, SID, Domain | out-host ; break}
+        2 {Get-WmiObject -Class Win32_Service | Select Name, PathName | out-host ; break}
+        3 {Get-WmiObject -Class Win32_Process | select Name, ProcessId, __PATH | out-host ; break}
+        4 {mainMenu} 
+        5 {exit}
+        default {
+           write-host -backgroundcolor red -foregroundcolor white "Invalid option"
+           sleep 4
 
-        Get-WmiObject -Class Win32_UserAccount | Select Name, SID, Domain | out-host
+           # Call the system admin menu so the user can start again.
+           secAdmin
+            
+        } # End default
 
-    } elseif ($secAdminTask -eq 2){
-
-        Get-WmiObject -Class Win32_Service | Select Name, PathName | out-host
-         
-    } elseif ($secAdminTask -eq 3){
-
-        Get-WmiObject -Class Win32_Process | select Name, ProcessId, __PATH | out-host
-
-    } elseif ($secAdminTask -eq "R"){
-
-        mainMenu
-
-    } elseif ($secAdminTask -eq "E"){
-
-        break
-
-    } else{
-
-        write-host -backgroundcolor red -foregroundcolor white "Invalid option"
-        sleep 4
-
-        # Call the system admin menu so the user can start again.
-        secAdmin
-
-    }
+    
+    } #End switch
 
     # Allow user to read results
     allDone
