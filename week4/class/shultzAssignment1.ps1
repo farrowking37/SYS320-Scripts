@@ -41,7 +41,9 @@ function mainMenu{
                 Write-Host "CVE NAME: $entryName"
                 Write-Host "CVE DESCK: $entryDesc"
                 Write-Host "CVE STAT: $entryStatus"
-           
+                
+                break
+
            } # End nested if
 
        
